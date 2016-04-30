@@ -18,7 +18,7 @@ public class GUIKontroler {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					menjacnica = new Menjacnica();
+					menjacnica = new Menjacnica(null);
 					frame = new MenjacnicaGUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -38,6 +38,23 @@ public class GUIKontroler {
 	
 	public static List<Kurs> vratiKurseve(){
 		return menjacnica.vratiSveKurseve();
+	}
+	
+	public static void unesiKurs(String sifraKursa, String skraceniNaziv, String prodajniKurs, String srednjiKurs, String kupovniKurs, String nazivKursa){
+		int sifra = Integer.parseInt(sifraKursa);
+		String skraceni = skraceniNaziv;
+		double prodajni = Double.parseDouble(prodajniKurs);
+		double srednji = Double.parseDouble(srednjiKurs);
+		double kupovni = Double.parseDouble(kupovniKurs);
+		String naziv = nazivKursa;
+		Kurs k = new Kurs(sifra, skraceni, prodajni, srednji, kupovni, naziv);
+		try {
+			menjacnica.dodajKurs(k);
+			frame.osveziTabelu();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

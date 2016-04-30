@@ -8,8 +8,8 @@ public class Menjacnica {
 
 	private List<Kurs> kursevi;
 	
-	public Menjacnica(){		
-	}
+	/*public Menjacnica(){		
+	}*/
 	
 	public Menjacnica(List<Kurs> kursevi){
 		if (kursevi == null) {
@@ -21,7 +21,7 @@ public class Menjacnica {
 	
 	public void dodajKurs(Kurs kurs) throws Exception{
 		if (kurs == null || kursevi.contains(kurs)) {
-			throw new Exception("Kurs nije dodat.");
+			throw new Exception("Kurs ne sme biti null");
 		} else {
 			kursevi.add(kurs);
 		}
