@@ -279,4 +279,8 @@ public class MenjacnicaGUI extends JFrame {
 		TableModelMenjacnica model = (TableModelMenjacnica) table.getModel();
 		model.ucitajKurseve(GUIKontroler.vratiKurseve());
 	}
+	
+	public void ispisiStatus(String status){
+		txtStatus.append(status);
+	}
 }

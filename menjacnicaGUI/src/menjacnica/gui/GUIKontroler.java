@@ -40,21 +40,29 @@ public class GUIKontroler {
 		return menjacnica.vratiSveKurseve();
 	}
 	
-	public static void unesiKurs(String sifraKursa, String skraceniNaziv, String prodajniKurs, String srednjiKurs, String kupovniKurs, String nazivKursa){
-		int sifra = Integer.parseInt(sifraKursa);
-		String skraceni = skraceniNaziv;
-		double prodajni = Double.parseDouble(prodajniKurs);
-		double srednji = Double.parseDouble(srednjiKurs);
-		double kupovni = Double.parseDouble(kupovniKurs);
-		String naziv = nazivKursa;
-		Kurs k = new Kurs(sifra, skraceni, prodajni, srednji, kupovni, naziv);
+	public static void unesiKurs(String sifraKursa, String skraceniNaziv, String prodajniKurs, String srednjiKurs,
+			String kupovniKurs, String nazivKursa) {
 		try {
+			int sifra = Integer.parseInt(sifraKursa);
+			String skraceni = skraceniNaziv;
+			double prodajni = Double.parseDouble(prodajniKurs);
+			double srednji = Double.parseDouble(srednjiKurs);
+			double kupovni = Double.parseDouble(kupovniKurs);
+			String naziv = nazivKursa;
+			Kurs k = new Kurs(sifra, skraceni, prodajni, srednji, kupovni, naziv);
+
 			menjacnica.dodajKurs(k);
 			frame.osveziTabelu();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static void ispisiStatus(String sifraKursa, String skraceniNaziv, String prodajniKurs, String srednjiKurs, String kupovniKurs, String nazivKursa){
+		String status = "Sifra kursa: " + sifraKursa +"Naziv kursa: " + nazivKursa + "Skraceni naziv: " + skraceniNaziv + "Prodajni kurs: "+ prodajniKurs
+				+ "Srednji kurs: " + srednjiKurs + "Kupovni kurs: " + kupovniKurs + "\n";
+		frame.ispisiStatus(status);
 	}
 
 }

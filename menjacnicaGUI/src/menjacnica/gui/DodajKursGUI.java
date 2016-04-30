@@ -170,6 +170,7 @@ public class DodajKursGUI extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					GUIKontroler.unesiKurs(txtSifra.getText(), txtSkraceniNaziv.getText(),
 							txtProdajni.getText(), txtSrednji.getText(), txtKupovni.getText(), txtNaziv.getText());
+					GUIKontroler.ispisiStatus(txtSifra.getText(), txtSkraceniNaziv.getText(), txtProdajni.getText(), txtSrednji.getText(), txtKupovni.getText(), txtNaziv.getText());
 					dispose();
 				}
 			});
