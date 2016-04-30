@@ -65,4 +65,10 @@ public class GUIKontroler {
 		frame.ispisiStatus(status);
 	}
 
+	public static void obrisiKurs(Kurs k) throws Exception {
+		menjacnica.obrisiKurs(k);
+		frame.osveziTabelu();
+		
+	}
+
 }

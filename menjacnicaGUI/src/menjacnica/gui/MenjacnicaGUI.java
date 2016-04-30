@@ -16,6 +16,7 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.border.TitledBorder;
 
+import menjacnica.Kurs;
 import menjacnica.gui.model.TableModelMenjacnica;
 
 import javax.swing.border.LineBorder;
@@ -140,6 +141,27 @@ public class MenjacnicaGUI extends JFrame {
 	private JButton getBtnIzbrisiKurs() {
 		if (btnIzbrisiKurs == null) {
 			btnIzbrisiKurs = new JButton("Izbrisi kurs");
+			btnIzbrisiKurs.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					int red = table.getSelectedRow();
+					if (red == -1) {
+						JOptionPane.showMessageDialog(null, "Morate izabrati kurs za brisanje.", "Greska", JOptionPane.WARNING_MESSAGE);
+					} else {
+						int rValue = JOptionPane.showConfirmDialog(null, "Da li ste sigurni da zelite da obrisete kurs?", "Brisanje kursa", JOptionPane.YES_NO_OPTION);
+						if (rValue == JOptionPane.OK_OPTION) {
+							TableModelMenjacnica model = (TableModelMenjacnica) table.getModel();
+							Kurs k = model.vratiKurs(rValue);
+							try {
+								GUIKontroler.obrisiKurs(k);
+							} catch (Exception e1) {
+								JOptionPane.showMessageDialog(null, "Greska pri brisanju.", "Kurs nije obrisan", JOptionPane.WARNING_MESSAGE);
+								return;
+							}
+							JOptionPane.showMessageDialog(null, "Kurs uspesno obrisan", "Obavestenje", JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
+				}
+			});
 			btnIzbrisiKurs.setBounds(10, 45, 110, 23);
 		}
 		return btnIzbrisiKurs;

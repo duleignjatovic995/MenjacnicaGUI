@@ -67,4 +67,9 @@ public class TableModelMenjacnica extends AbstractTableModel{
 		fireTableDataChanged();
 	}
 
+	public Kurs vratiKurs(int index) {
+		return kursevi.get(index);
+		
+	}
+
 }

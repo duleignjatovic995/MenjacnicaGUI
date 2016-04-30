@@ -28,9 +28,12 @@ public class Menjacnica {
 	}
 	
 	public void obrisiKurs(Kurs kurs) throws Exception{
-		if (!kursevi.contains(kurs)) {
+		if (kurs == null || !kursevi.contains(kurs)) {
 			throw new Exception("Kurs nije u listi");
+		} else {
+			kursevi.remove(kurs);
 		}
+		
 	}
 	
 	public List<Kurs> vratiSveKurseve(){
