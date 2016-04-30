@@ -15,6 +15,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.border.TitledBorder;
+
+import menjacnica.gui.model.TableModelMenjacnica;
+
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JTextArea;
@@ -27,6 +30,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.LinkedList;
 import java.awt.event.InputEvent;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
@@ -55,21 +59,7 @@ public class MenjacnicaGUI extends JFrame {
 	private JScrollPane scrollPane_2;
 	private JTextArea txtStatus;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MenjacnicaGUI frame = new MenjacnicaGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * Create the frame.
@@ -90,19 +80,13 @@ public class MenjacnicaGUI extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				ugasiAplikaciju();
+				GUIKontroler.ugasiAplikaciju();
 			}
 		});
 		
 	}
 	
-	private void ugasiAplikaciju(){
-		int izbor = JOptionPane.showConfirmDialog(getContentPane(), "Da li sigurno zelite da ugasite aplikaciju?",
-				"Zatvaranje aplikacije", JOptionPane.YES_NO_CANCEL_OPTION);
-		if (izbor == JOptionPane.OK_OPTION) {
-			System.exit(0);
-		}
-	}
+	
 
 	private JPanel getJpnlButton() {
 		if (jpnlButton == null) {
@@ -135,27 +119,35 @@ public class MenjacnicaGUI extends JFrame {
 	private JTable getTable() {
 		if (table == null) {
 			table = new JTable();
+			TableModelMenjacnica model = new TableModelMenjacnica(null);
+			table.setModel(model);
 		}
 		return table;
 	}
 	private JButton getBtnDodajkurs() {
 		if (btnDodajkurs == null) {
 			btnDodajkurs = new JButton("Dodaj kurs");
-			btnDodajkurs.setBounds(20, 11, 100, 23);
+			btnDodajkurs.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					DodajKursGUI dodaj = new DodajKursGUI();
+					dodaj.setVisible(true);
+				}
+			});
+			btnDodajkurs.setBounds(10, 11, 110, 23);
 		}
 		return btnDodajkurs;
 	}
 	private JButton getBtnIzbrisiKurs() {
 		if (btnIzbrisiKurs == null) {
 			btnIzbrisiKurs = new JButton("Izbrisi kurs");
-			btnIzbrisiKurs.setBounds(20, 45, 100, 23);
+			btnIzbrisiKurs.setBounds(10, 45, 110, 23);
 		}
 		return btnIzbrisiKurs;
 	}
 	private JButton getBtnIzvrsiIzmenu() {
 		if (btnIzvrsiIzmenu == null) {
 			btnIzvrsiIzmenu = new JButton("Izvrsi izmenu");
-			btnIzvrsiIzmenu.setBounds(20, 79, 100, 23);
+			btnIzvrsiIzmenu.setBounds(10, 79, 110, 23);
 		}
 		return btnIzvrsiIzmenu;
 	}
@@ -190,7 +182,7 @@ public class MenjacnicaGUI extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					JDialog jdg = new JDialog();
 					jdg.setTitle("About");
-					jdg.add(new JLabel("Dusan Ignjatovic"));
+					jdg.getContentPane().add(new JLabel("Dusan Ignjatovic"));
 					jdg.setBounds(0, 0, 120, 120);
 					jdg.setVisible(true);
 				}
@@ -249,7 +241,7 @@ public class MenjacnicaGUI extends JFrame {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					ugasiAplikaciju();
+					GUIKontroler.ugasiAplikaciju();
 				}
 			});
 		}
@@ -281,5 +273,10 @@ public class MenjacnicaGUI extends JFrame {
 			txtStatus = new JTextArea();
 		}
 		return txtStatus;
+	}
+	
+	public void osveziTabelu(){
+		TableModelMenjacnica model = (TableModelMenjacnica) table.getModel();
+		model.ucitajKurseve(GUIKontroler.vratiKurseve());
 	}
 }
