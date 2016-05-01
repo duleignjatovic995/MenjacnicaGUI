@@ -11,7 +11,15 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.AncestorEvent;
 
 public class IzvrsiIzmenuGUI extends JFrame {
 
@@ -29,22 +37,7 @@ public class IzvrsiIzmenuGUI extends JFrame {
 	private JSlider slider;
 	private JButton btnIzvrsiIzmenu;
 	private JButton btnOdustani;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					IzvrsiIzmenuGUI frame = new IzvrsiIzmenuGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private ButtonGroup bg;
 
 	/**
 	 * Create the frame.
@@ -52,7 +45,7 @@ public class IzvrsiIzmenuGUI extends JFrame {
 	public IzvrsiIzmenuGUI() {
 		setResizable(false);
 		setTitle("Izvrsi izmenu");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 389, 315);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -71,6 +64,11 @@ public class IzvrsiIzmenuGUI extends JFrame {
 		contentPane.add(getSlider());
 		contentPane.add(getBtnIzvrsiIzmenu());
 		contentPane.add(getBtnOdustani());
+		bg = new ButtonGroup();
+		bg.add(rdbtnKupovina);
+		bg.add(rdbtnProdaja);
+		rdbtnKupovina.setSelected(true);
+		txtIznos.setText(slider.getValue()+"");
 	}
 	private JLabel getLblKupovniKurs() {
 		if (lblKupovniKurs == null) {
@@ -89,6 +87,7 @@ public class IzvrsiIzmenuGUI extends JFrame {
 	private JTextField getTxtKupovniKurs() {
 		if (txtKupovniKurs == null) {
 			txtKupovniKurs = new JTextField();
+			txtKupovniKurs.setEditable(false);
 			txtKupovniKurs.setBounds(25, 46, 104, 20);
 			txtKupovniKurs.setColumns(10);
 		}
@@ -97,6 +96,7 @@ public class IzvrsiIzmenuGUI extends JFrame {
 	private JTextField getTxtProdajniKurs() {
 		if (txtProdajniKurs == null) {
 			txtProdajniKurs = new JTextField();
+			txtProdajniKurs.setEditable(false);
 			txtProdajniKurs.setBounds(245, 46, 110, 20);
 			txtProdajniKurs.setColumns(10);
 		}
@@ -106,6 +106,8 @@ public class IzvrsiIzmenuGUI extends JFrame {
 		if (comboBox == null) {
 			comboBox = new JComboBox();
 			comboBox.setBounds(139, 46, 96, 20);
+			String[] triKursa = {"EUR", "USD", "CHF"};
+			comboBox.setModel(new DefaultComboBoxModel<>(triKursa));
 		}
 		return comboBox;
 	}
@@ -148,6 +150,16 @@ public class IzvrsiIzmenuGUI extends JFrame {
 	private JSlider getSlider() {
 		if (slider == null) {
 			slider = new JSlider();
+			slider.addChangeListener(new ChangeListener() {
+				
+				@Override
+				public void stateChanged(ChangeEvent e) {
+					if (!slider.getValueIsAdjusting()) {
+						txtIznos.setText(slider.getValue()+"");
+					}
+					
+				}
+			});
 			slider.setMinorTickSpacing(5);
 			slider.setPaintLabels(true);
 			slider.setPaintTicks(true);
@@ -159,6 +171,18 @@ public class IzvrsiIzmenuGUI extends JFrame {
 	private JButton getBtnIzvrsiIzmenu() {
 		if (btnIzvrsiIzmenu == null) {
 			btnIzvrsiIzmenu = new JButton("Izvrsi izmenu");
+			btnIzvrsiIzmenu.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					String transakcija = "Greska pri odabiructransakcije";
+					if (rdbtnKupovina.isSelected()) {
+						transakcija = "Kupovina";
+					} else if (rdbtnProdaja.isSelected()) {
+						transakcija = "Prodaja";
+					}
+					String status = "Valuta: " + comboBox.getSelectedItem() + " Iznos: " + txtIznos.getText() + " Transakcija: " + transakcija + "\n";
+					GUIKontroler.ispisiStatus(status);
+				}
+			});
 			btnIzvrsiIzmenu.setBounds(25, 245, 126, 23);
 		}
 		return btnIzvrsiIzmenu;
@@ -166,6 +190,11 @@ public class IzvrsiIzmenuGUI extends JFrame {
 	private JButton getBtnOdustani() {
 		if (btnOdustani == null) {
 			btnOdustani = new JButton("Odustani");
+			btnOdustani.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dispose();
+				}
+			});
 			btnOdustani.setBounds(220, 245, 121, 23);
 		}
 		return btnOdustani;

@@ -64,6 +64,10 @@ public class GUIKontroler {
 				+ "Srednji kurs: " + srednjiKurs + "Kupovni kurs: " + kupovniKurs + "\n";
 		frame.ispisiStatus(status);
 	}
+	
+	public static void ispisiStatus(String status){
+		frame.ispisiStatus(status);
+	}
 
 	public static void obrisiKurs(Kurs k) throws Exception {
 		menjacnica.obrisiKurs(k);
