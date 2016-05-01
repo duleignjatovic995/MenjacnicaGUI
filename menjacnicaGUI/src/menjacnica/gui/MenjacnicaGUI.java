@@ -157,6 +157,7 @@ public class MenjacnicaGUI extends JFrame {
 								JOptionPane.showMessageDialog(null, "Greska pri brisanju.", "Kurs nije obrisan", JOptionPane.WARNING_MESSAGE);
 								return;
 							}
+							GUIKontroler.ispisiStatus(k.getSifra()+"", k.getSkraceniNaziv(), k.getProdajniKurs()+"", k.getSrednjiKurs()+"", k.getKupovniKurs()+"", k.getNaziv());
 							JOptionPane.showMessageDialog(null, "Kurs uspesno obrisan", "Obavestenje", JOptionPane.INFORMATION_MESSAGE);
 						}
 					}
