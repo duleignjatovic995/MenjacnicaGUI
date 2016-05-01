@@ -181,6 +181,7 @@ public class IzvrsiIzmenuGUI extends JFrame {
 					}
 					String status = "Valuta: " + comboBox.getSelectedItem() + " Iznos: " + txtIznos.getText() + " Transakcija: " + transakcija + "\n";
 					GUIKontroler.ispisiStatus(status);
+					
 				}
 			});
 			btnIzvrsiIzmenu.setBounds(25, 245, 126, 23);
