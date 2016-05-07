@@ -152,7 +152,7 @@ public class MenjacnicaGUI extends JFrame {
 						int rValue = JOptionPane.showConfirmDialog(null, "Da li ste sigurni da zelite da obrisete kurs?", "Brisanje kursa", JOptionPane.YES_NO_OPTION);
 						if (rValue == JOptionPane.OK_OPTION) {
 							TableModelMenjacnica model = (TableModelMenjacnica) table.getModel();
-							Kurs k = model.vratiKurs(rValue);
+							Kurs k = model.vratiKurs(red);
 							try {
 								GUIKontroler.obrisiKurs(k);
 							} catch (Exception e1) {
